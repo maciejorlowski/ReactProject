@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './head.css';
 import * as serviceWorker from './serviceWorker';
-import Head from "./head";
+import Main from "./main";
 
 
-// ReactDOM.render(<App />, document.getElementById('root'));
-// ReactDOM.render(<Hello />, document.getElementById('root'));
-ReactDOM.render(<Head />, document.getElementsByTagName('HEADER')[0]);
+ReactDOM.render(<Main />, document.getElementById("root"));
 
 
 
