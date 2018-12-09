@@ -1,40 +1,33 @@
 import React, {Component} from 'react';
 import './home.css';
+import './index.css';
 import './head.css';
-
 import {
     Route,
-    NavLink,
-    HashRouter
+    HashRouter,
+    BrowserRouter,
+    Link,
+    NavLink
 } from "react-router-dom";
+
+
+import {Nav, Navbar, NavItem, PageHeader, FormGroup, FormControl, Button} from "react-bootstrap";
+
 import Home from "./home";
 import Stuff from "./stuff";
 import Contact from "./contact";
+import PanelFooter from "react-bootstrap/es/PanelFooter";
+import Footer from "./Footer";
+
 
 class Main extends Component {
     render() {
         return (
-            <HashRouter>
+            <BrowserRouter>
 
                 <div>
-                    <div className="container head-bcg head-panel col-md-12 col-sm-12" id="header">
-                        <div className="d-flex justify-content-center  col-md-offset-5">
-                            <title className="title-gradient head-title ">Cinema</title>
-                        </div>
-                        <div className="row justify-content-md-center ">
 
-                            <li><NavLink to="/">
-                                <button className="btn btn-warning px-3">Home</button>
-                            </NavLink></li>
-                            <li><NavLink to="/stuff">
-                                <button className="btn btn-warning px-3">Stuff</button>
-                            </NavLink></li>
-                            <li><NavLink to="/contact">
-                                <button className="btn btn-warning px-3">Contact</button>
-                            </NavLink></li>
-                        </div>
-                    </div>
-
+                    <header/>
 
                     <section id="aaa">
                         <Route exact path="/" component={Home}/>
@@ -42,11 +35,16 @@ class Main extends Component {
                         <Route path="/contact" component={Contact}/>
                     </section>
 
+                    <Footer/>
+
                 </div>
 
-            </HashRouter>
+            </BrowserRouter>
+
+
         );
     }
 }
 
 export default Main;
+
