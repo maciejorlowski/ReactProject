@@ -17,21 +17,20 @@ class Main extends Component {
             <HashRouter>
 
                 <div>
-                    <div className="container head-bcg head-panel col-md-12 col-sm-12" id="header">
-                        <div className="d-flex justify-content-center  col-md-offset-5">
-                            <title className="title-gradient head-title ">Cinema</title>
+                    <div className="container head-bcg head-panel col-md-12 col-sm-12 pos-static" id="header">
+                        <div className="d-flex justify-content-center  col-md-offset-0">
+                            <div className="title-gradient head-title" id="headTitle">Cinema</div>
                         </div>
                         <div className="row justify-content-md-center ">
-
-                            <li><NavLink to="/">
+                            <NavLink to="/">
                                 <button className="btn btn-warning px-3">Home</button>
-                            </NavLink></li>
-                            <li><NavLink to="/stuff">
+                            </NavLink>
+                            <NavLink to="/stuff">
                                 <button className="btn btn-warning px-3">Stuff</button>
-                            </NavLink></li>
-                            <li><NavLink to="/contact">
+                            </NavLink>
+                            <NavLink to="/contact">
                                 <button className="btn btn-warning px-3">Contact</button>
-                            </NavLink></li>
+                            </NavLink>
                         </div>
                     </div>
 
