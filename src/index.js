@@ -8,7 +8,7 @@ import Head from "./head";
 
 
 ReactDOM.render(<Main />, document.getElementById("root"));
-ReactDOM.render(<Head />, document.getElementsByTagName("header")[0]);
+// ReactDOM.render(<Head />, document.getElementsByTagName("header")[0]);
 
 
 

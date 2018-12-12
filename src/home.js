@@ -6,6 +6,11 @@ class Home extends Component {
     render() {
         return (
             <div >
+                {/*<ul>*/}
+                    {/*{this.state.posts.map(post =>*/}
+                        {/*<li key={post.id}> {post.title} {post.year}</li>*/}
+                    {/*)}*/}
+                {/*</ul>*/}
                 <h2>HELLO</h2>
                 <p>Cras facilisis urna ornare ex volutpat, et
                     convallis erat elementum. Ut aliquam, ipsum vitae
