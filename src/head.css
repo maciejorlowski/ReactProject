@@ -1,0 +1,40 @@
+
+
+.container{
+    width: 100%;
+    height: 15%;
+    min-height: 180px;
+}
+
+.head-bcg{
+    background-color: #282c34;
+}
+
+.head-panel{
+    /*position: static;*/
+    margin-top: 0;
+    left: 0;
+    top: 0;
+    right: 0;
+    padding: 0;
+}
+
+
+
+.pos-static{
+    position: static!important;
+}
+
+
+#headTitle  {
+    font-family: Impact, Charcoal, sans-serif;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 75px;
+    margin: unset;
+    background-image: linear-gradient(
+            to bottom right,
+            #c40405 22px,
+            #da0405 22px,
+            #ffffff 66px)
+}
