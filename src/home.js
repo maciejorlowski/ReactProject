@@ -3,6 +3,12 @@ import './head.css';
 
 
 class Home extends Component {
+
+    constructor(){
+        super();
+    }
+
+
     render() {
         return (
             <div >
