@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 
 class Contact extends Component {
+
+    constructor(props){
+        super(props);
+
+        console.log("Contactstop COMPONENT");
+
+    }
+
+
     render() {
         return (
             <div>

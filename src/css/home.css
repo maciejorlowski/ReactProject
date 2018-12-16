@@ -1,0 +1,53 @@
+.home-bcg {
+    background-color: #da0405;
+    height: 800px;
+}
+
+.home-pos {
+     margin-top: 9%;
+     position: static;
+ }
+
+#movies-list {
+    padding: 20px;
+}
+
+.item-title-color {
+    color: #f7f7f7;
+    background-color: #ad230e;
+    padding: 5px 10px 5px 10px;
+    text-align: center !important;
+    display: inline;
+    border-radius: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.item-color {
+    /*background-color: #8ead99 !important;*/
+    background-color: #ad7971 !important;
+    color: white;
+}
+
+.search-bar {
+    display: inline !important;
+}
+
+.home-body {
+    padding: 7px;
+}
+
+.order-box{
+    /*width: 150px !important;*/
+    /*display: inline !important;*/
+    /*position: absolute;*/
+}
+.list-item{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+

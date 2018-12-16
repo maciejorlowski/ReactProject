@@ -1,34 +1,201 @@
-import React, { Component } from "react";
-import './head.css';
+import React, {Component} from "react";
+import {render} from "react-dom";
+import './css/head.css';
+import './css/App.css';
+import './css/home.css';
+import {Button, FormControl, Panel, Row} from "react-bootstrap";
+import Col from "react-bootstrap/es/Col";
+import axios from "axios";
+import {compareServerDataWithLocalStorage} from "./utils/localstorage";
+import Details from "./details";
 
+import Select from 'react-select';
+import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 
 class Home extends Component {
 
-    constructor(){
-        super();
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            movies: [],
+            moviesCopy: [],
+            showResults: false,
+            selected: {},
+            searchPhrase: '',
+            orderField:{}
+        };
+
+
+        this.handleMultiChange = this.handleMultiChange.bind(this);
     }
 
+    handleMultiChange(option) {
+        this.setState(state => {
+            return {
+                multiValue: option
+            };
+        });
+    }
+
+    componentDidMount() {
+
+        axios.get(`https://api.myjson.com/bins/bba2s`)
+            .then(res => {
+                var movies = res.data;
+                movies = compareServerDataWithLocalStorage(movies);
+                console.log("Home Component data load to state");
+                this.setState({movies: movies});
+                this.setState({moviesCopy: movies});
+            });
+    }
+
+    showDetails = (e, movieId) => {
+        let selected = this.state.movies[movieId];
+        this.setState({selected: selected});
+        this.setState({showResults: true});
+    };
+
+    filterList = (value) => {
+        this.setState({
+            movies: this.state.moviesCopy,
+            searchPhrase: value
+        });
+        if (value !== "") {
+            let movies = this.state.movies;
+            movies = movies.filter((mov) => {
+                let poetName = mov.title.toLowerCase();
+                return poetName.indexOf(
+                    value.toLowerCase()) !== -1
+            });
+            this.setState({
+                movies
+            })
+        }
+
+
+    };
+     parseISOLocal=(s)=> {
+        var b = s.split(/\D/);
+        return new Date(b[0], b[1]-1, b[2], b[3], b[4], b[5]);
+    };
+
+
+    order = (a, b,field) => {
+        if (field === "Title") {
+            if (a.title < b.title) {
+                return -1;
+            }
+            if (a.title > b.title) {
+                return 1;
+            }
+            return 0;
+        } else if (field === "Year") {
+            return a.year - b.year;
+        } else if (field === "Date") {
+
+            let now = new Date().valueOf();
+
+            //TODO order by date field
+            let shows1 = a.shows;
+            let dates1 = [];
+            let min1=0;
+            for (let i = 0; i <shows1.length ; i++) {
+                dates1.push((this.parseISOLocal(shows1[i].date).valueOf()-now));
+                if (min1>dates1[dates1.length-1]){
+                    min1=dates1[dates1.length-1];
+                }
+            }
+
+            let shows2 = b.shows;
+            let dates2 = [];
+            let min2=0;
+            for (let i = 0; i <shows2.length ; i++) {
+                dates2.push((this.parseISOLocal(shows2[i].date).valueOf()-now));
+                if (min2>dates2[dates2.length-1]){
+                    min2=dates2[dates2.length-1];
+                }
+            }
+
+            return min1-min2;
+        }
+    };
+
+    orderByFields = (a, b) => {
+        return this.order(a, b,this.state.orderField.label);
+    };
+
+    handleChange = (orderField) => {
+        this.setState({ orderField});
+    };
 
     render() {
-        return (
-            <div >
-                {/*<ul>*/}
-                    {/*{this.state.posts.map(post =>*/}
-                        {/*<li key={post.id}> {post.title} {post.year}</li>*/}
-                    {/*)}*/}
-                {/*</ul>*/}
-                <h2>HELLO</h2>
-                <p>Cras facilisis urna ornare ex volutpat, et
-                    convallis erat elementum. Ut aliquam, ipsum vitae
-                    gravida suscipit, metus dui bibendum est, eget rhoncus nibh
-                    metus nec massa. Maecenas hendrerit laoreet augue
-                    nec molestie. Cum sociis natoque penatibus et magnis
-                    dis parturient montes, nascetur ridiculus mus.</p>
 
-                <p>Duis a turpis sed lacus dapibus elementum sed eu lectus.</p>
+        const options = [
+            {label: 'Title', value: 1},
+            {label: 'Year', value: 2},
+            {label: 'Date', value: 3},
+        ];
+
+        return (
+            <div className="home home-pos">
+
+                {this.state.showResults ? <Details item={this.state.selected}/> :
+                    <div id="movies-list">
+                        <div className="home-body">
+                            <Row className="search-bar">
+                                <Col md={6} mdOffset={3}>
+                                    <FormControl className="col-md-4" type="text" placeholder="Search"
+                                                 onChange={(e)=>{this.filterList(e.target.value)} } />
+                                    {/*<Button type="submit">Submit</Button>*/}
+
+                                    {/*<ReactMultiSelectCheckboxes onChange={this.showOrderFields} options={options}/>*/}
+
+                                    <Select className="col-md-4 order-box"
+                                        value={this.state.orderField}
+                                        onChange={this.handleChange}
+                                        options={options}
+                                    />
+                                </Col>
+                            </Row>{' '}
+                        </div>
+
+
+                        {this.state.movies
+                            .sort((a, b) => this.orderByFields(a, b))
+                            .map(movie =>
+                                <Row key={movie.id} onClick={(e) => {
+                                    this.showDetails(e, movie.id)
+                                }}>
+                                    <Col className="list-item item-color" md={6} mdOffset={3} >
+                                        <div >
+                                            <div >
+                                                <div>
+                                                    <div className="text-center">
+                                                        <div
+                                                            >{movie.title}{" "}{movie.year}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                {movie.description}
+                                                <a href={movie.link}> link</a>
+                                            </div>
+                                        </div>
+                                    </Col>
+
+                                </Row>
+                            // </NavLink>
+                        )}
+                    </div>
+
+                }
             </div>
         );
+
     }
+
 }
+
 
 export default Home;

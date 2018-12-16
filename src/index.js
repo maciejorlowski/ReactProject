@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import './head.css';
+import './css/index.css';
+import './css/head.css';
 import * as serviceWorker from './serviceWorker';
 import Main from "./main";
-import Head from "./head";
 
 
 ReactDOM.render(<Main />, document.getElementById("root"));

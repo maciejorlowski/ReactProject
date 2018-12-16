@@ -11,7 +11,7 @@
 }
 
 .head-panel{
-    /*position: static;*/
+    position: static;
     margin-top: 0;
     left: 0;
     top: 0;
@@ -22,7 +22,7 @@
 
 
 .pos-static{
-    position: static!important;
+    position: absolute;
 }
 
 
