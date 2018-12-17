@@ -4,12 +4,13 @@
 }
 
 .home-pos {
-     margin-top: 9%;
-     position: static;
- }
+    margin-top: 9%;
+    position: static;
+}
 
 #movies-list {
     padding: 20px;
+    min-height: 1000px;
 }
 
 .item-title-color {

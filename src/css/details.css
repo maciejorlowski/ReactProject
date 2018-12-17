@@ -1,6 +1,6 @@
 .details{
     background-color: dimgray;
-    min-height: 800px;
+    min-height: 1000px;
     height: 600px;
 
 }
@@ -8,11 +8,13 @@
 
 .details-pos {
     margin-top: 9%;
+    color: #b2daca;
     position: static;
     padding: 20px;
 }
 
 .movie-photo{
+    margin-top: 5%;
     width:100%;
     max-width:300px;
     /*max-height:150px;*/
