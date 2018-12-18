@@ -21,29 +21,11 @@ class Main extends Component {
 
     constructor(props) {
         super(props);
-        //
-        // this.state = {
-        //     movies: []
-        // };
+
     }
 
     componentDidMount() {
-        // //TODO load data from localhost
-        //
-        // axios.get(`https://api.myjson.com/bins/bba2s`)
-        //     .then(res => {
-        //         var movies = res.data;
-        //         movies = compareServerDataWithLocalStorage(movies);
-        //
-        //         this.setState({movies: movies});
-        //     });
-        //
-        // // axios.get(`https://api.myjson.com/bins/bba2s`)
-        // //     .then(res => {
-        // //         const movies = res.data;
-        // //         console.log(res.data);
-        // //         this.setState({movies: movies});
-        // //     });
+
 
     }
 
@@ -86,11 +68,6 @@ class Main extends Component {
         );
     }
 }
-
-// const Child = ({ match }) => (
-//     <div>
-//         <h3>ID: {match.params.movieID}</h3>
-//     </div>
 // )
 export default Main;
 

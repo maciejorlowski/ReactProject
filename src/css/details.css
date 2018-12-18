@@ -1,15 +1,14 @@
 .details{
     background-color: dimgray;
     min-height: 1000px;
-    height: 600px;
-
+    /*height: 600px;*/
 }
 
 
 .details-pos {
-    margin-top: 9%;
+    /*margin-top: 9%;*/
     color: #b2daca;
-    position: static;
+    /*position: static;*/
     padding: 20px;
 }
 

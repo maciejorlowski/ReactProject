@@ -40,7 +40,7 @@ class Home extends Component {
 
     componentDidMount() {
 
-        axios.get(`https://api.myjson.com/bins/bba2s`)
+        axios.get(`https://api.myjson.com/bins/hgxbk`)
             .then(res => {
                 var movies = res.data;
                 movies = compareServerDataWithLocalStorage(movies);

@@ -3,6 +3,7 @@
 .container{
     width: 100%;
     height: 15%;
+    margin-bottom: 35px;
     min-height: 180px;
 }
 
@@ -11,7 +12,7 @@
 }
 
 .head-panel{
-    position: static;
+    /*position: static;*/
     margin-top: 0;
     left: 0;
     top: 0;
@@ -22,7 +23,7 @@
 
 
 .pos-static{
-    position: absolute;
+    /*position: absolute;*/
 }
 
 
