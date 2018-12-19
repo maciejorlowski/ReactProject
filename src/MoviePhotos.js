@@ -1,19 +1,16 @@
 import React, { Component } from "react";
 import Gallery from "react-photo-gallery";
+import PropTypes from 'prop-types';
+import Edit from "./Edit";
 
 class MoviePhotos extends Component {
 
     constructor(props){
         super(props);
-        console.log("MoviePhotos props ");
-
-        console.log(props);
-        console.log(props.photos);
 
         this.state = {
             photos: props.photos,
         }
-
 
     }
     componentDidMount() {
@@ -25,7 +22,6 @@ class MoviePhotos extends Component {
     replacePhotosFormat = (moviePhotos) => {
 
         let result = [];
-
         for (let i = 0; i <moviePhotos.length ; i++) {
 
             let tmp={};
@@ -33,7 +29,6 @@ class MoviePhotos extends Component {
             tmp.width=7;
             tmp.height= 7;
             result.push(tmp);
-
         }
 
         this.setState({photos :result});
@@ -56,3 +51,8 @@ class MoviePhotos extends Component {
 }
 
 export default MoviePhotos;
+
+
+MoviePhotos.propTypes = {
+    photos: PropTypes.array
+};

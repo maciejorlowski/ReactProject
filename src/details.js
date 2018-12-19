@@ -6,7 +6,9 @@ import {Row} from "react-bootstrap";
 import Col from "react-bootstrap/es/Col";
 import {Button, ButtonToolbar,} from "react-bootstrap";
 import MoviePhotos from "./MoviePhotos";
-
+import {Link, NavLink} from "react-router-dom";
+import PropTypes from 'prop-types';
+import {update} from "./utils/localstorage";
 
 class Details extends Component {
 
@@ -14,23 +16,18 @@ class Details extends Component {
     constructor(props) {
         super(props);
 
-        console.log("Detail constructor ");
-        console.log("Details props ");
-        console.log(props);
-        console.log(props.item);
 
         this.state = {
-            movie: props.item,
+            movie: props.location.state.movie,
             showEdit: false,
-            photos: props.item.gallery,
-            photosVisible: false
-        }
+            photos: props.location.state.movie.gallery,
+            photosVisible: false,
+            movieExsist: true
+        };
+
+        this.changeNumberOfAvailable=this.changeNumberOfAvailable.bind(this);
 
 
-    }
-
-
-    componentDidMount() {
     }
 
     updateTitleName(newtitle) {
@@ -51,45 +48,74 @@ class Details extends Component {
         this.setState({currentIndex});
     };
 
+    changeNumberOfAvailable(show){
+        let movie = Object.assign({}, this.state.movie);
+
+        for (let i = 0; i <movie.shows.length ; i++) {
+            if (movie.shows[i].id===show.id){
+                movie.shows[i].unvailablePlaces++;
+            }
+        }
+
+        this.setState({movie:movie});
+
+        update(movie);
+    }
+
+
     render() {
+
+
         return (
             <div className="details details-pos">
 
-                <Col md={5} mdOffset={4}>
-                    {this.state.movie.title}
-                    {this.state.movie.year}
-                    {this.state.movie.link}
+                    <div>
+                        <Col md={5} mdOffset={4}>
+                            {this.state.movie.title}
+                            {this.state.movie.year}
+                            {this.state.movie.link}
 
-                </Col>
+                        </Col>
 
-
-                <ButtonToolbar>
-                    <Button bsStyle="default" onClick={(event) => this.open("showEdit", this.state.movie.id)}>Edit
-                        Recipe</Button>
-                </ButtonToolbar>
-
-                <Col md={10} mdOffset={1}>
-
-                    {this.state.movie.shows
-                        .map(show =>
-                            <div key={show.id}>
-
-                                <p> {show.date}</p>
-                                <p>{show.unvailablePlaces} </p>
-                                <p>{show.availablePlaces} </p>
-
-                            </div>
-                        )}
+                        <Link
+                            className="link-text-color"
+                            to={{
+                                pathname: "/edit",
+                                state: {
+                                    movie: this.state.movie,
+                                }
+                            }}
+                        >
+                            <Button bsStyle="default">Edit</Button>
+                        </Link>
 
 
-                    <Button bsStyle="primary" onClick={this.toggleMoviePhotos}>
-                        Show photos
-                    </Button>
-                    {this.state.photosVisible ? <MoviePhotos photos={this.state.photos}/> :
-                        <div></div>
-                    }
 
-                </Col>
+                        <Col md={10} mdOffset={1}>
+
+                            {this.state.movie.shows
+                                .map(show =>
+                                    <div key={show.id}>
+                                        <p>Date : {show.date}
+                                        {'  '}  Available places  :{show.availablePlaces}
+                                        {'  '}  Unvailable places  : {show.unvailablePlaces} {'  '}
+                                            {show.unvailablePlaces<show.availablePlaces ?  <Button bsStyle="success" onClick={()=>this.changeNumberOfAvailable(show)}> Buy ticket</Button> :
+                                                <Button bsStyle="danger"> Buy ticket</Button>
+                                            }
+                                       </p>
+                                    </div>
+                                )}
+
+
+                            <Button bsStyle="primary" onClick={this.toggleMoviePhotos}>
+                                Show photos
+                            </Button>
+                            {this.state.photosVisible ? <MoviePhotos photos={this.state.photos}/> :
+                                <div></div>
+                            }
+
+                        </Col>
+                    </div>
 
             </div>
 
@@ -100,62 +126,48 @@ class Details extends Component {
 
 export default Details;
 
+function movieValidator(props, propName) {
 
-{/*<Modal show={this.state.showEdit} onHide={this.close}>*/
-}
-{/*<Modal.Header closeButton>*/
-}
-{/*<Modal.Title>Edit Recipe</Modal.Title>*/
-}
-{/*</Modal.Header>*/
-}
+    if (props.location.state[propName]) {
+        let value = props.location.state[propName];
+        if (typeof value === 'object' && typeof value.id !== 'undefined' && typeof value.title !== 'undefined' && typeof value.year !== 'undefined') {
+            console.log("adadada");
+            if (value.id < 0) {
+                return new Error("id of " + propName + " is wrong");
+            } else if (value.title === "") {
+                return new Error("title of " + propName + " is wrong");
+            } else if (value.year === 0) {
+                return new Error("year of " + propName + " is wrong");
+            }
+        }
+    }
 
-{/*<Modal.Body>*/
-}
-{/*<FormGroup controlId="formBasicText">*/
-}
-{/*<ControlLabel>Movie Title</ControlLabel>*/
-}
-{/*<FormControl*/
-}
-{/*type="text"*/
-}
-{/*placeholder="Enter text"*/
-}
-{/*onChange={(event) => this.updateTitleName(event.target.value)}*/
-}
-{/*value={this.state.movie.title}>*/
-}
-{/*</FormControl>*/
-}
-{/*</FormGroup>*/
-}
-{/*/!*<FormGroup controlId="formControlTextarea">*!/*/
-}
-{/*/!*<ControlLabel>Ingredients</ControlLabel>*!/*/
-}
-{/*/!*<FormControl*!/*/
-}
-{/*/!*componentClass="textarea"*!/*/
-}
-{/*/!*onChange={(event) => this.updateIngredients(event.target.value.split(","), currentIndex)}*!/*/
-}
-{/*/!*placeholder="Enter Ingredients (Seperate by Columns)"*!/*/
-}
-{/*/!*value={recipes[currentIndex].ingredients}>*!/*/
-}
-{/*/!*</FormControl>*!/*/
-}
-{/*/!*</FormGroup>*!/*/
-}
-{/*</Modal.Body>*/
-}
-{/*<Modal.Footer>*/
-}
-{/*<Button bsStyle="primary" onClick={this.close}> Close</Button>*/
-}
-{/*</Modal.Footer>*/
+    return null;
 }
 
-{/*</Modal>*/
+
+function photosValidator(props) {
+    console.log(props);
+
+    let value = props.location.state.movie.gallery;
+    if (typeof value === 'object' && typeof value.length !==  'undefined') {
+        for (let i = 0; i <value.length ; i++) {
+            if(typeof  value[i].id ==='undefined'){
+                return new Error("Object of movie photos gallery dont have id field");
+            }
+        }
+    }
+
+    return null;
 }
+
+
+Details.propTypes = {
+    movie: movieValidator,
+    photos: photosValidator,
+    movieExsist: PropTypes.bool,
+    photosVisible: PropTypes.bool,
+    showEdit: PropTypes.bool
+};
+
+
