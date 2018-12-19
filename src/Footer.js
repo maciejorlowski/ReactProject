@@ -7,7 +7,7 @@ class Footer extends Component {
     render() {
         return (
             <PanelFooter id="footer" >
-                <div  align="center">
+                <div class="underFooter">
                     <tr>
                         <th> Temat Pracy: &ensp;</th>
                         <th> Strona filmowa</th>

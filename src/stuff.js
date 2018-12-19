@@ -35,7 +35,7 @@ class Stuff extends Component {
 
     render() {
         return (
-            <div>
+            <div class="stuffDiv">
 
                 {/*<h3>ID: {this.match.params.movieID}</h3>*/}
                 {/*<h3>ID: {this.state.selectedId}</h3>*/}
