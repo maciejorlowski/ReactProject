@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {remove, save, update} from "./utils/localstorage";
+import './css/newMovie.css';
 import OriginalMovie from "./OriginalMovie";
 
 class NewMovie extends Component {
@@ -260,22 +261,22 @@ class NewMovie extends Component {
 
     render() {
         return (
-            <div>
+            <div className="newMovie newMovie-pos">
 
 
-                <button onClick={this.saveMovie}>Save</button>
+                <button  style={{backgroundColor:'lightblue'}} onClick={this.saveMovie}>Save</button>
 
-                <input type="text" value={this.state.movie.title} onChange={this.handleChangeTitle}
+                <input style={{backgroundColor:'lightblue'}} type="text" value={this.state.movie.title} onChange={this.handleChangeTitle}
                        placeholder="Title" className="form-control"/>
-                <input type="number" value={this.state.movie.year} onChange={this.handleChangeYear}
+                <input style={{backgroundColor:'lightblue'}} type="number" value={this.state.movie.year} onChange={this.handleChangeYear}
                        placeholder="Year"/>
-                <input type="text" value={this.state.movie.description} onChange={this.handleChangeDescription}
+                <input style={{backgroundColor:'lightblue'}} type="text" value={this.state.movie.description} onChange={this.handleChangeDescription}
                        placeholder="Description" className="form-control"/>
 
                 {this.state.movie.shows
                     .map(show =>
                         <div key={show.id}>
-                            <input type="number" onChange={(e) => this.handleChangeAvailablePlaces(e, show)}
+                            <input style={{backgroundColor:'lightblue'}} type="number" onChange={(e) => this.handleChangeAvailablePlaces(e, show)}
                                    value={show.availablePlaces}/>
                         </div>
                     )}
@@ -285,23 +286,23 @@ class NewMovie extends Component {
                         <div key={photo.id}>
                             <div>
                                 <div>{photo.image}</div>
-                                <button onClick={(e) => this.removeSelectedImage(photo, e)}>Delete</button>
+                                <button style={{backgroundColor:'lightblue'}} onClick={(e) => this.removeSelectedImage(photo, e)}>Delete</button>
                             </div>
                         </div>
                     )}
 
                 <div>
-                    <input type="url" placeholder="image url" onBlur={this.handleBlurImageUrl}
+                    <input style={{backgroundColor:'lightblue'}} type="url" placeholder="image url" onBlur={this.handleBlurImageUrl}
                            className="form-control"/>
-                    <button onClick={this.addImage}>Add image</button>
+                    <button style={{backgroundColor:'lightblue'}} onClick={this.addImage}>Add image</button>
                 </div>
 
 
                 <div>
-                    <input type="datetime-local" placeholder="Show date" onBlur={this.handleBlurShowDate}/>
-                    <input type="number" placeholder="AvailablePlaces" className="form-control"
+                    <input style={{backgroundColor:'lightblue'}} type="datetime-local" placeholder="Show date" onBlur={this.handleBlurShowDate}/>
+                    <input style={{backgroundColor:'lightblue'}} type="number" placeholder="AvailablePlaces" className="form-control"
                            onBlur={this.handleBlurShowAvailablePlaces}/>
-                    <button onClick={this.addShow}>Add show</button>
+                    <button style={{backgroundColor:'lightblue'}} onClick={this.addShow}>Add show</button>
                 </div>
 
 
