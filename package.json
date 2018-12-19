@@ -30,6 +30,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "jquery": "^3.3.1",
     "react-photo-gallery": "^6.2.2"
   }
 }

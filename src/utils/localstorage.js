@@ -24,6 +24,7 @@ export function compareServerDataWithLocalStorage(movies) {
     }
 
     let addedMoves = JSON.parse(localStorage.getItem("addedMovies"));
+    console.log(addedMoves);
     for (let i = 0; i < movies.length; i++) {
         let index = movieIndex(movies[i], addedMoves);
         if (index !== (-1)) {
@@ -123,7 +124,47 @@ export function add(obj) {
 
 
 export function remove(obj) {
+    console.log(obj);
+
+    let removed =  JSON.parse(localStorage.getItem("removedMovies"));
+
+    removed.push(obj);
+    console.log(removed);
+    localStorage.setItem("removedMovies", JSON.stringify(removed));
 
 
+};
+
+export function save(obj) {
+
+    let added = JSON.parse(localStorage.getItem("addedMovies"));
+    let last = JSON.parse(localStorage.getItem("lastID"));
+
+    obj.id=last;
+    added.push(obj);
+    localStorage.setItem("removedMovies", JSON.stringify(added));
+    last++;
+    localStorage.setItem("lastID", JSON.stringify(last));
+    //TODO check
+};
+
+
+
+export function update(obj) {
+
+
+    console.log(obj);
+
+    let added = JSON.parse(localStorage.getItem("addedMovies"))
+
+    console.log(added);
+
+    if (movieIndex(obj,added)===-1){
+        added.push(obj);
+    } else {
+        added[movieIndex(obj,added)]=obj;
+    }
+
+    localStorage.setItem("addedMovies", JSON.stringify(added));
 
 };

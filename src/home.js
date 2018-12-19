@@ -1,16 +1,16 @@
 import React, {Component} from "react";
-import {render} from "react-dom";
 import './css/head.css';
 import './css/App.css';
 import './css/home.css';
-import {Button, FormControl, Panel, Row} from "react-bootstrap";
+import {Row} from "react-bootstrap";
 import Col from "react-bootstrap/es/Col";
 import axios from "axios";
 import {compareServerDataWithLocalStorage} from "./utils/localstorage";
-import Details from "./details";
+import {Link} from "react-router-dom";
+import PropTypes from 'prop-types';
+import Movie from "./Movie";
+import MoviesListNavigator from "./MovieNavigator";
 
-import Select from 'react-select';
-import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 
 class Home extends Component {
 
@@ -23,7 +23,7 @@ class Home extends Component {
             showResults: false,
             selected: {},
             searchPhrase: '',
-            orderField:{}
+            orderField: {}
         };
 
 
@@ -75,14 +75,16 @@ class Home extends Component {
 
 
     };
-     parseISOLocal=(s)=> {
+    parseISOLocal = (s) => {
         var b = s.split(/\D/);
-        return new Date(b[0], b[1]-1, b[2], b[3], b[4], b[5]);
+        return new Date(b[0], b[1] - 1, b[2], b[3], b[4], b[5]);
     };
 
 
-    order = (a, b,field) => {
-        if (field === "Title") {
+    order = (a, b, field) => {
+        if (field === '-') {
+            this.state.movies = this.state.moviesCopy;
+        } else if (field === "Title") {
             if (a.title < b.title) {
                 return -1;
             }
@@ -96,100 +98,75 @@ class Home extends Component {
 
             let now = new Date().valueOf();
 
-            //TODO order by date field
             let shows1 = a.shows;
             let dates1 = [];
-            let min1=0;
-            for (let i = 0; i <shows1.length ; i++) {
-                dates1.push((this.parseISOLocal(shows1[i].date).valueOf()-now));
-                if (min1>dates1[dates1.length-1]){
-                    min1=dates1[dates1.length-1];
+            let min1 = 0;
+            for (let i = 0; i < shows1.length; i++) {
+                dates1.push((this.parseISOLocal(shows1[i].date).valueOf() - now));
+                if (min1 > dates1[dates1.length - 1]) {
+                    min1 = dates1[dates1.length - 1];
                 }
             }
 
             let shows2 = b.shows;
             let dates2 = [];
-            let min2=0;
-            for (let i = 0; i <shows2.length ; i++) {
-                dates2.push((this.parseISOLocal(shows2[i].date).valueOf()-now));
-                if (min2>dates2[dates2.length-1]){
-                    min2=dates2[dates2.length-1];
+            let min2 = 0;
+            for (let i = 0; i < shows2.length; i++) {
+                dates2.push((this.parseISOLocal(shows2[i].date).valueOf() - now));
+                if (min2 > dates2[dates2.length - 1]) {
+                    min2 = dates2[dates2.length - 1];
                 }
             }
 
-            return min1-min2;
+            return min1 - min2;
         }
     };
 
     orderByFields = (a, b) => {
-        return this.order(a, b,this.state.orderField.label);
+        return this.order(a, b, this.state.orderField.label);
     };
 
-    handleChange = (orderField) => {
-        this.setState({ orderField});
+    handleOrderFieldChange = (orderField) => {
+        this.setState({orderField});
     };
 
     render() {
 
-        const options = [
-            {label: 'Title', value: 1},
-            {label: 'Year', value: 2},
-            {label: 'Date', value: 3},
-        ];
 
         return (
             <div className="home home-pos">
 
-                {this.state.showResults ? <Details item={this.state.selected}/> :
-                    <div id="movies-list">
-                        <div className="home-body">
-                            <Row className="search-bar">
-                                <Col md={6} mdOffset={3}>
-                                    <FormControl className="col-md-4" type="text" placeholder="Search"
-                                                 onChange={(e)=>{this.filterList(e.target.value)} } />
-                                    {/*<Button type="submit">Submit</Button>*/}
+                <div id="movies-list">
+                    <div className="home-body">
+                        <Row className="search-bar">
+                            <Col md={6} mdOffset={3}>
 
-                                    {/*<ReactMultiSelectCheckboxes onChange={this.showOrderFields} options={options}/>*/}
+                                <MoviesListNavigator orderField={this.state.orderField}
+                                                     handelfunc={this.handleOrderFieldChange}
+                                                     filter={this.filterList}/>
 
-                                    <Select className="col-md-4 order-box"
-                                        value={this.state.orderField}
-                                        onChange={this.handleChange}
-                                        options={options}
-                                    />
-                                </Col>
-                            </Row>{' '}
-                        </div>
-
-
-                        {this.state.movies
-                            .sort((a, b) => this.orderByFields(a, b))
-                            .map(movie =>
-                                <Row key={movie.id} onClick={(e) => {
-                                    this.showDetails(e, movie.id)
-                                }}>
-                                    <Col className="list-item item-color" md={6} mdOffset={3} >
-                                        <div >
-                                            <div >
-                                                <div>
-                                                    <div className="text-center">
-                                                        <div
-                                                            >{movie.title}{" "}{movie.year}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                {movie.description}
-                                                <a href={movie.link}> link</a>
-                                            </div>
-                                        </div>
-                                    </Col>
-
-                                </Row>
-                            // </NavLink>
-                        )}
+                            </Col>
+                        </Row>{' '}
                     </div>
 
-                }
+
+                    {this.state.movies
+                        .sort((a, b) => this.orderByFields(a, b))
+                        .map(movie =>
+
+                            <Link key={movie.id}
+                                  className="link-text-color"
+                                  to={{
+                                      pathname: "/details",
+                                      state: {movie: movie}
+                                  }}>
+                                <Movie id={movie.id} title={movie.title} year={movie.year} link={movie.link}
+                                       description={movie.description} details={this.showDetails}/>
+
+                            </Link>
+                        )}
+                </div>
+
             </div>
         );
 
@@ -197,5 +174,18 @@ class Home extends Component {
 
 }
 
-
 export default Home;
+
+
+Home.propTypes = {
+    movies: PropTypes.array,
+    moviesCopy: PropTypes.array,
+    showResults: PropTypes.bool,
+    searchPhrase: PropTypes.string,
+    orderField: PropTypes.object,
+};
+
+
+
+
+
