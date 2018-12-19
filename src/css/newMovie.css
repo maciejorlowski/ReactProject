@@ -1,6 +1,6 @@
 .newMovie{
     background-color: dimgray;
-    min-height: 1000px;
+    min-height: 71vh;
     /*height: 600px;*/
 }
 
@@ -10,7 +10,5 @@
     color: #000000;
     /*position: static;*/
     padding: 20px;
-    padding-left: 600px;
-    padding-right: 600px;
 
 }

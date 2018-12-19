@@ -45,7 +45,7 @@ class Main extends Component {
         return (
             <BrowserRouter>
 
-                <div>
+                <div class="underRoot">
 
                     <Head navigate={this.state.navigate} />
 

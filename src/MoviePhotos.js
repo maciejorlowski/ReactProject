@@ -38,7 +38,7 @@ class MoviePhotos extends Component {
 
     render() {
         return (
-            <div >
+            <div className="photo-div">
                 <Gallery
                     photos={this.state.photos}
                     direction={"column"}

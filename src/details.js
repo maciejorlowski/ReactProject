@@ -25,7 +25,7 @@ class Details extends Component {
             movieExsist: true
         };
 
-        this.changeNumberOfAvailable=this.changeNumberOfAvailable.bind(this);
+        this.changeNumberOfAvailable = this.changeNumberOfAvailable.bind(this);
 
 
     }
@@ -48,16 +48,16 @@ class Details extends Component {
         this.setState({currentIndex});
     };
 
-    changeNumberOfAvailable(show){
+    changeNumberOfAvailable(show) {
         let movie = Object.assign({}, this.state.movie);
 
-        for (let i = 0; i <movie.shows.length ; i++) {
-            if (movie.shows[i].id===show.id){
+        for (let i = 0; i < movie.shows.length; i++) {
+            if (movie.shows[i].id === show.id) {
                 movie.shows[i].unvailablePlaces++;
             }
         }
 
-        this.setState({movie:movie});
+        this.setState({movie: movie});
 
         update(movie);
     }
@@ -69,53 +69,57 @@ class Details extends Component {
         return (
             <div className="details details-pos">
 
-                    <div>
-                        <Col md={5} mdOffset={4}>
-                            {this.state.movie.title}
-                            {this.state.movie.year}
-                            {this.state.movie.link}
+                <div className="flex-main-detail">
+                    <Col>
+                        {this.state.movie.title}
+                        {this.state.movie.year}
+                        {this.state.movie.link}
 
-                        </Col>
+                    </Col>
 
-                        <Link
-                            className="link-text-color"
-                            to={{
-                                pathname: "/edit",
-                                state: {
-                                    movie: this.state.movie,
-                                }
-                            }}
-                        >
-                            <Button bsStyle="default">Edit</Button>
-                        </Link>
-
-
-
-                        <Col md={10} mdOffset={1}>
-
-                            {this.state.movie.shows
-                                .map(show =>
-                                    <div key={show.id}>
-                                        <p>Date : {show.date}
-                                        {'  '}  Available places  :{show.availablePlaces}
-                                        {'  '}  Unvailable places  : {show.unvailablePlaces} {'  '}
-                                            {show.unvailablePlaces<show.availablePlaces ?  <Button bsStyle="success" onClick={()=>this.changeNumberOfAvailable(show)}> Buy ticket</Button> :
-                                                <Button bsStyle="danger"> Buy ticket</Button>
-                                            }
-                                       </p>
-                                    </div>
-                                )}
+                    <Link
+                        className="link-text-color"
+                        to={{
+                            pathname: "/edit",
+                            state: {
+                                movie: this.state.movie,
+                            }
+                        }}
+                    >
+                        <Button bsStyle="default">Edit</Button>
+                    </Link>
 
 
+                    <Col className="div100">
+
+                        {this.state.movie.shows
+                            .map(show =>
+                                <div className="row-center-flex" key={show.id}>
+                                    <p>Date : {show.date}
+                                        {'  '} Available places :{show.availablePlaces}
+                                        {'  '} Unvailable places : {show.unvailablePlaces} {'  '}
+                                        {show.unvailablePlaces < show.availablePlaces ? <Button bsStyle="success"
+                                                                                                onClick={() => this.changeNumberOfAvailable(show)}> Buy
+                                                ticket</Button> :
+                                            <Button bsStyle="danger"> Buy ticket</Button>
+                                        }
+                                    </p>
+                                </div>
+                            )}
+
+
+                        <Col className="row-center-flex div100">
                             <Button bsStyle="primary" onClick={this.toggleMoviePhotos}>
                                 Show photos
                             </Button>
-                            {this.state.photosVisible ? <MoviePhotos photos={this.state.photos}/> :
-                                <div></div>
-                            }
-
                         </Col>
-                    </div>
+                        {this.state.photosVisible ? <MoviePhotos photos={this.state.photos}/> :
+                            <div></div>
+                        }
+
+
+                    </Col>
+                </div>
 
             </div>
 
@@ -150,9 +154,9 @@ function photosValidator(props) {
     console.log(props);
 
     let value = props.location.state.movie.gallery;
-    if (typeof value === 'object' && typeof value.length !==  'undefined') {
-        for (let i = 0; i <value.length ; i++) {
-            if(typeof  value[i].id ==='undefined'){
+    if (typeof value === 'object' && typeof value.length !== 'undefined') {
+        for (let i = 0; i < value.length; i++) {
+            if (typeof  value[i].id === 'undefined') {
                 return new Error("Object of movie photos gallery dont have id field");
             }
         }

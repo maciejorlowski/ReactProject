@@ -1,6 +1,6 @@
 .details{
     background-color: dimgray;
-    min-height: 1000px;
+    min-height: 52.5vw;
     /*height: 600px;*/
 }
 
@@ -10,8 +10,6 @@
     color: #b2daca;
     /*position: static;*/
     padding: 20px;
-    padding-left: 400px;
-    padding-right: 400px;
 }
 
 .movie-photo{
@@ -19,4 +17,19 @@
     width:100%;
     max-width:300px;
     /*max-height:150px;*/
+}
+
+.flex-main-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.div100 {
+    width: 100%;
+}
+
+.row-center-flex {
+    justify-content: center;
+    display: flex;
 }
